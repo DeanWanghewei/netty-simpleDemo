@@ -4,7 +4,7 @@ import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import netty.handler.MyClientInitializer;
+import netty.initializer.MyClientInitializer;
 
 /**
  * @Author deanWang

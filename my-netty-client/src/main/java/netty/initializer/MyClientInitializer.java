@@ -1,4 +1,4 @@
-package netty.handler;
+package netty.initializer;
 
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
@@ -8,6 +8,7 @@ import io.netty.handler.codec.LengthFieldPrepender;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 import io.netty.util.CharsetUtil;
+import netty.handler.MyClientHandler;
 
 
 public class MyClientInitializer extends ChannelInitializer<SocketChannel> {

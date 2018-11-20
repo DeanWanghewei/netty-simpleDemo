@@ -1,32 +1,34 @@
 package netty;
 
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.ChannelFuture;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
-import netty.initializer.MyServerInitializer;
+import netty.initializer.MyHeartbeatServerInitializer;
 
-public class NettyServer {
-
+public class NettyHeartbeatServer {
     public static void main(String[] args) {
-        NioEventLoopGroup bossGroup = new NioEventLoopGroup();
+        NioEventLoopGroup baseGroup = new NioEventLoopGroup();
         NioEventLoopGroup workGroup = new NioEventLoopGroup();
-        ServerBootstrap serverBootstrap = new ServerBootstrap();
+
+
         try {
-            serverBootstrap
-                    .group(bossGroup, workGroup)
+
+            ServerBootstrap bootstrap = new ServerBootstrap();
+            bootstrap.group(baseGroup, workGroup)
                     .channel(NioServerSocketChannel.class)
                     .handler(new LoggingHandler(LogLevel.INFO))
-                    .childHandler(new MyServerInitializer());
-            ChannelFuture channelFuture = serverBootstrap.bind(8899).sync();
-            channelFuture.channel().closeFuture().sync();
+                    .childHandler(new MyHeartbeatServerInitializer());
+
+            bootstrap.bind(8899).sync();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
-            bossGroup.shutdownGracefully();
+            baseGroup.shutdownGracefully();
             workGroup.shutdownGracefully();
         }
+
+
     }
 }
